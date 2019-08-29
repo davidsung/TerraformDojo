@@ -1,12 +1,15 @@
+# Ignore Mac specific .DS_Store folder
+.DS_Store
+
 #  Local .terraform directories
 **/.terraform/*
 
 # .tfstate files
-*.tfstate
-*.tfstate.*
+**/*.tfstate
+**/*.tfstate.*
 
 # .tfvars files
-*.tfvars
+**/*.tfvars
 
 # Ignore custom files
 *.[0-9]*
