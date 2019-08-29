@@ -1,3 +1,7 @@
+terraform {
+  required_version = ">= 0.12.0"
+}
+
 provider "google" {
   project = "foo789-terraform-admin"
 }
