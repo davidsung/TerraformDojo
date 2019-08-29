@@ -3,7 +3,7 @@ terraform {
 }
 
 provider "google" {
-  project = "foo789-terraform-admin"
+  project = "${var.project_id}"
 }
 
 # ------------------------------------------------------------------------------
@@ -28,6 +28,7 @@ module "mgnt-svr" {
 
   mgnt_server-zone   = "europe-west2-a"
   mgnt_server-subnet = "${module.global.my-mgnt-subnet}"
+  mgnt_server-image  = "${var.gcloud_compute_image}"
 }
 
 # ------------------------------------------------------------------------------
@@ -40,6 +41,7 @@ module "internal-testbox-svr" {
   testbox_server-name   = "internal-testbox-svr"
   testbox_server-zone   = "europe-west2-a"
   testbox_server-subnet = "${module.global.my-internal-subnet}"
+  testbox_server-image  = "${var.gcloud_compute_image}"
 
   testbox_server-tags   = ["fw-ssh-ingress"]
 }
@@ -162,6 +164,7 @@ module "bastion-svr" {
 
   bastion_server-zone   = "europe-west2-a"
   bastion_server-subnet = "${module.global.my-edmz-subnet}"
+  bastion_server-image  = "${var.gcloud_compute_image}"
 
   bastion_server-tags   = ["fw-ssh-ingress"]
 }
@@ -173,6 +176,7 @@ module "idmz-edmz-router" {
   router_server-name             = "idmz-edmz-router"
   router_server-primary_subnet   = "${module.global.my-edmz-subnet}"
   router_server-secondary_subnet = "${module.global.my-idmz-subnet}"
+  router_server-image            = "${var.gcloud_compute_image}"
   router_server-zone             = "europe-west2-a"
   router_server-tags             = ["fw-ssh-ingress", "fw-idmz-proxy-ingress"]
 }
@@ -183,6 +187,7 @@ module "edmz-testbox-svr" {
   testbox_server-name   = "edmz-testbox-svr"
   testbox_server-zone   = "europe-west2-a"
   testbox_server-subnet = "${module.global.my-edmz-subnet}"
+  testbox_server-image  = "${var.gcloud_compute_image}"
 
   testbox_server-tags   = ["fw-ssh-ingress"]
 }

@@ -25,13 +25,18 @@ resource "google_compute_instance" "squid_server" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9" # "${var.image_squid}"
+      image = "${var.squid_server-image}" # "${var.image_squid}"
     }
   }
 
   tags = var.squid_server-tags
 
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install squid -y"
+  # metadata_startup_script = "sudo apt-get update; sudo apt-get install squid -y"
+  metadata = {
+    startup-script = <<SCRIPT
+${file("${path.module}/scripts/install-squid.sh")}
+SCRIPT
+  }
 
 #  depends_on = [
   #  "${var.squid_server-subnet}",

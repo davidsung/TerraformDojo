@@ -28,13 +28,18 @@ resource "google_compute_instance" "router_server" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9" # "${var.image_router}"
+      image = "${var.router_server-image}" # "${var.image_router}"
     }
   }
 
   tags = var.router_server-tags
 
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install router -y"
+  # metadata_startup_script = "sudo apt-get update; sudo apt-get install router -y"
+  metadata = {
+    startup-script = <<SCRIPT
+${file("${path.module}/scripts/install-router.sh")}
+SCRIPT
+  }
 
 #  depends_on = [
   #  "${var.router_server-subnet}",

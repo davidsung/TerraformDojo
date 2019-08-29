@@ -25,7 +25,7 @@ resource "google_compute_instance" "mgnt_server" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9" # "${var.image_web}"
+      image = "${var.mgnt_server-image}" # "${var.image_web}"
     }
   }
 
